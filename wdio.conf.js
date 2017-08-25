@@ -126,7 +126,7 @@ exports.config = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: http://webdriver.io/guide/testrunner/reporters.html
-  reporters: ["spec"],
+  reporters: ["dot"],
 
   //
   // Options to be passed to Mocha.
@@ -167,7 +167,14 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that are to be run
      */
   before: function() {
-    require("dotenv").config();
+    var dotenv = require("dotenv");
+    const result = dotenv.config();
+
+    if (result.error) {
+      throw result.error;
+    }
+
+    console.log("HEY ERIC, LOOK HERE!", result.parsed);
     require("babel-register");
     require("babel-polyfill");
     var chai = require("chai");
